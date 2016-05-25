@@ -1,0 +1,5 @@
+package com.automatic.controller.helpers;
+
+public class CustomAuthenticationHandler {
+
+}

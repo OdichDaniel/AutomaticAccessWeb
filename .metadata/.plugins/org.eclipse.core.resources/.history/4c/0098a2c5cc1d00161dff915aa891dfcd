@@ -1,0 +1,70 @@
+package com.automatic.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.automatic.database.FetchStudents;
+import com.automatic.models.CreateStudentResponse;
+import com.automatic.models.StudentDetail;
+import com.automatic.models.StudentModel;
+
+@Controller
+public class UtilsController
+{
+	@RequestMapping(method = RequestMethod.GET, value = "allStudents")
+	public ModelAndView getAllStudents()
+	{
+		//HashMap<String, Object> model = new HashMap<String, Object>();
+		//model.put("students", FetchStudents.getStudentList());
+		
+		ModelAndView modelAndView = new ModelAndView("allStudents");
+		modelAndView.addObject("students", FetchStudents.getStudentList());
+
+		return modelAndView;
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="returnHome")
+	public ModelAndView returnHome()
+	{
+		return new ModelAndView("register");
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "profile")
+	public ModelAndView studentProfile(@RequestParam("studentNumber") String studentNumber, @RequestParam("firstName") String firstName,
+			@RequestParam("secondName") String secondName)
+	{
+		System.out.println(studentNumber);
+		ModelAndView mv = new ModelAndView("profilepage");
+		mv.addObject("studentNumber", studentNumber);
+		mv.addObject("firstName", firstName);
+		mv.addObject("secondName", secondName);
+		
+		return mv;
+	}
+	
+
+	@RequestMapping(method = RequestMethod.GET, value = "details", produces = MediaType.ALL_VALUE)
+	public ResponseEntity<StudentDetail> getNumber(@RequestParam("studentNumber") String studentNumber)
+	{
+		StudentDetail detail = new StudentDetail();
+		detail.setStudentNumber(studentNumber);
+		detail.setCourse("Forestry");
+		detail.setCourseDuration("3");
+		detail.setTution("1,000,000");
+		
+		return new ResponseEntity<StudentDetail>(detail, HttpStatus.OK);
+	}
+	
+}

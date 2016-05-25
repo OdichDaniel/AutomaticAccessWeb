@@ -1,0 +1,67 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script src="resources/js/assassin.js"></script>
+<script type="text/javascript">
+
+window.onload = function ()
+{
+   var studentNumber = "${studentNumber}";
+   var getDetails = function getStudentDetails(studentNumber)
+{
+	var http = new XMLHttpRequest();
+	var url = "http://localhost:8080/AutomaticAccessSystem/details?studentNumber="+studentNumber;
+	http.open("GET", url, true);
+	
+	http.onreadystatechange = function() {
+	    var status = http.status;
+	    if(http.readyState == 4 && http.status == 200) {
+	        alert(http.responseText);
+	        var obj = JSON.parse(http.responseText);
+	        document.getElementById("student-number").innerHTML = obj.studentNumber;
+	        
+	    }
+	    else
+	    {
+	    	response = "";
+	    }
+	}
+	http.send(null);
+	
+	return response;
+}
+   
+   
+   
+}
+  
+</script>
+</head>
+<body>
+<div id="student-name">${firstName}&nbsp;&nbsp;${secondName}</div>
+<div id="image-container">
+  <img src="resources/images/profile.png" />
+</div>
+
+<div class="preloader6"></div>
+
+<div class="student-profile-container">
+<div class="student-profile">
+<table>
+<tr><td style="padding-right:120px; padding-bottom:20px;">Student number</td><td id="student-number"></td></tr>
+<tr><td style="padding-right:120px; padding-bottom:20px;">Course</td><td id="course">Computer engineering</td></tr>
+<tr><td style="padding-right:120px; padding-bottom:20px;">Course duration</td><td id="course-duration">4</td></tr>
+<tr><td style="padding-right:120px; padding-bottom:20px;">Tuition</td><td id="tuition">858488</td></tr>
+</table>
+</div>
+</div>
+
+
+</body>
+</html>

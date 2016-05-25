@@ -1,0 +1,17 @@
+var validationStudentData = angular.module('validateStudentData', []);
+
+// create angular controller
+validationStudentData.controller('mainController', function($scope) {
+
+	// function to submit the form after all validation has occurred			
+	$scope.submitForm = function(isValid) {
+
+		alert('hey');
+		// check to make sure the form is completely valid
+		if (isValid) { 
+			
+		}
+
+	};
+
+});

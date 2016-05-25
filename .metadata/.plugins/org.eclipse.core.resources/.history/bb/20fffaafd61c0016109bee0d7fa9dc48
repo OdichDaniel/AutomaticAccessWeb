@@ -1,0 +1,25 @@
+<table class = "table">
+   
+   <thead>
+      <tr>
+         <th>First name</th>
+         <th>Second name</th>
+         <th>Student number</th>
+         <th>Course</th>
+         <th>Course duration</th>
+      </tr>
+   </thead>
+   
+   <tbody>
+     <c:forEach var="student" items="${students}">
+            <tr style="font-size: 10">
+                <td>${student[0].getFirstName()}</td>
+                <td>${student[0].getSecondName()}</td>
+                <td>${student[0].getStudentNumber()}</td>
+                <td>${student[0].getCourse()}</td>
+                <td>${student[0].getCourseDuration()}</td>
+            </tr>
+            </c:forEach>
+   </tbody>
+	
+</table>

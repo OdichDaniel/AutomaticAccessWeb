@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;spring-security-loginform-database&apos;" deleteContents="false" description="Delete resource &apos;spring-security-loginform-database&apos;" element1="/spring-security-loginform-database" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1463835336924"/>
+</session>

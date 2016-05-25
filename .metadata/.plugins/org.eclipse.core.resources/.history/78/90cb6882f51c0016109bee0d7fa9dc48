@@ -1,0 +1,38 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+	<html>
+	<head>
+	<title>Login</title>
+	<link rel='stylesheet' href='webjars/bootstrap/3.0.0/css/bootstrap.css'>
+	<link rel='stylesheet' href='resources/css/automatic_style.css'>
+	</head>
+	<body>
+	 
+	    <form:form method="GET" action="/AutomaticAccessSystem/home" commandName="form" class="col-md-12" id="form-layout-style">
+	        
+	            <div><h2><font color="#ff2525">Restricted Area</font></h2></div>
+	            <hr id="horizontal-rule">
+	            
+	            <div><form:errors path="loginCredentialError" cssStyle="color: #ff0000;"/></div>
+	        
+	            <div class="form-group">
+	                
+	                <form:input class="form-control" path="username" placeholder="Username"/><span><form:errors path="username" cssStyle="color: #ff0000;"/></span>
+	                
+	            </div>
+	            <div class="form-group">
+	              
+	                <form:input path="password" class="form-control" placeholder="Password" />
+	                <form:errors path="password" cssStyle="color: #ff0000;" />
+	            </div>
+	           
+	            <div class="form-group">
+	                <input type="submit" value="Sign in" class="btn btn-primary btn-lg btn-block" name="submit"/>
+	                <span class="pull-right"><a href="">New registration</a></span>
+	            </div>
+	            
+	    </form:form>
+
+	</body>
+	</html>

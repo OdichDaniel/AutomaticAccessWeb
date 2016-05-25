@@ -1,0 +1,26 @@
+<table class = "table">
+   
+   <thead>
+      <tr>
+         <th>First name</th>
+         <th>Second name</th>
+         <th>Student number</th>
+         <th>Course</th>
+         <th>Course duration</th>
+      </tr>
+   </thead>
+   
+   <tbody>
+     <c:forEach var="student" items="${students}">
+            <tr style="font-size: 10">
+            
+                <td><c:out value="${students[8].getFirstName()}"></c:out></td>
+                <td><c:out value="${student.secondName}"></c:out></td>
+                <td><c:out value="${student.studentNumber}"></c:out></td>
+                <td><c:out value="${student.course}"></c:out></td>
+                <td><c:out value="${student.courseDuration}"></c:out></td>
+            </tr>
+            </c:forEach>
+   </tbody>
+	
+</table>

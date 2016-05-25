@@ -1,0 +1,8 @@
+  <div id='sidemenu'>
+       <ul>
+         <li><a href="/AutomaticAccessSystem/home"><span>Register</span></a>
+         <li><a href='/AutomaticAccessSystem/allStudents'><span>All students</span></a></li>
+         <li><a href='#'><span>Change password</span></a></li>
+         <li><a href='#'><span>Sign out</span></a></li>
+    </ul>
+   </div>

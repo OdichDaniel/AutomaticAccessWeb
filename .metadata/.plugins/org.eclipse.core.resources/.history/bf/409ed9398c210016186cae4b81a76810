@@ -1,0 +1,23 @@
+package com.automatic.database;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public abstract class CommonDBUtils
+{
+
+	public int updatePassword(String oldPassword, String newPassword, Connection connection)
+	{
+		String updateQuery = "UPDATE users password='"+newPassword+"' WHERE password='"+oldPassword+"'";
+		try {
+			PreparedStatement statement = connection.prepareStatement(updateQuery);
+			int updated =statement.executeUpdate();
+			return updated;
+		} catch (SQLException e) {
+			
+			return 0;
+		}
+	}
+
+}

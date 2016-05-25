@@ -1,0 +1,25 @@
+<table class = "table">
+   
+   <thead>
+      <tr>
+         <th>First name</th>
+         <th>Second name</th>
+         <th>Student number</th>
+         <th>Course</th>
+         <th>Course duration</th>
+      </tr>
+   </thead>
+   
+   <tbody>
+     <c:forEach var="student" items="${students}"  varStatus="loopCounter">
+            <tr style="font-size: 10">
+                <td>${student.get(${loopCounter}).getFirstName()}</td>
+                <td>${student.getSecondName()}</td>
+                <td>${student.getStudentNumber()}</td>
+                <td>${student.getCourse()}</td>
+                <td>${student.getCourseDuration()}</td>
+            </tr>
+            </c:forEach>
+   </tbody>
+	
+</table>
