@@ -9,20 +9,9 @@
 	  
 	  <bean id="task_scheduler" class="com.automatic.controller.helpers.TimerService" />
 	  <task:scheduled-tasks>
-     	<task:scheduled ref="task_scheduler" method="updateStudentRecord" fixed-rate="200000"/>
+     	<task:scheduled ref="task_scheduler" method="updateStudentRecord" fixed-rate="20000"/>
      </task:scheduled-tasks>
-     
-      <mvc:annotation-driven/>
-<mvc:interceptors>
-    <bean id="webContentInterceptor" 
-          class="org.springframework.web.servlet.mvc.WebContentInterceptor">
-        <property name="cacheSeconds" value="0"/>
-        <property name="useExpiresHeader" value="true"/>
-        <property name="useCacheControlHeader" value="true"/>
-        <property name="useCacheControlNoStore" value="true"/>
-    </bean>
-</mvc:interceptors>
-	    
+        
 	    
 	    <bean id="viewResolver"
             class="org.springframework.web.servlet.view.UrlBasedViewResolver">

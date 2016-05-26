@@ -65,7 +65,7 @@ var changePassword = function()
      </div>
      
  <div class="change-password-container">
-<form autocomplete="off" class="hold-widgets" role="form" data-toggle="validator">
+<form autocomplete="off" role="form" data-toggle="validator">
 
 <div class="form-widgets">
 <div class="form-group">
@@ -91,9 +91,8 @@ var changePassword = function()
 <div class="form-group">
 <input type="text" placeholder="Tuition" id="tuition" class="form-control" required="required"/>
 </div>
+<div class="form-group">
+<button type="submit" class="btn btn-primary btn-block">Submit</button></div>
 </div>
-<div> <button type="submit" class="btn btn-primary">Submit</button></div>
+</form>
 </div>
-</form>>
-	    
-	 </div>

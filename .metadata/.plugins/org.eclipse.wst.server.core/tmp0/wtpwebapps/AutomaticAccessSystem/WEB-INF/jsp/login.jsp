@@ -2,7 +2,8 @@
 <%@page session="true"%>
 <html>
 <head>
-<title>Login Page</title>
+<title>Login</title>
+<link rel='stylesheet' href='webjars/bootstrap/3.0.0/css/bootstrap.css'>
 <style>
 .error {
 	padding: 15px;
@@ -25,23 +26,32 @@
 }
 
 #login-box {
-	width: 300px;
+	width: 30%;
 	padding: 20px;
 	margin: 100px auto;
 	background: #fff;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border: 1px solid #000;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	border: 2px solid #d3dbde;
+}
+#message-holder
+{
+   padding:10px;
+   background:#d3dbde;
+   border-radius:3px;
 }
 </style>
+<SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT>
 </head>
-<body onload='document.loginForm.username.focus();'>
-
-	<h1>Spring Security Login Form (Database Authentication)</h1>
-
+<body  onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+	
 	<div id="login-box">
 
-		<h2>Login with Username and Password</h2>
+     <div id="message-holder"><h2>Login with Username and Password</h2></div>
+		
 
 		<c:if test="${not empty error}">
 			<div class="error">${error}</div>
@@ -56,18 +66,20 @@
 		<form name='loginForm'
 		  action="<c:url value='/j_spring_security_check' />" method='POST'>
 
-		<table>
-			<tr>
-				<td>User:</td>
-				<td><input type='text' name='username'></td>
+		<table cellpadding="5" style="width:100%;">
+		     
+		    <tr ><td>Username</td></tr>
+			<tr id="spacer">
+				
+				<td><input class="form-control" type='text' name='username'></td>
+			</tr>
+			 <tr><td>Password</td></tr>
+			<tr id="spacer">
+			
+				<td><input class="form-control" type='password' name='password' /></td>
 			</tr>
 			<tr>
-				<td>Password:</td>
-				<td><input type='password' name='password' /></td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="submit" type="submit"
-				  value="submit" /></td>
+				<td><input class="btn btn-primary btn-block" name="submit" type="submit" value="Login" /></td>
 			</tr>
 		  </table>
 

@@ -12,7 +12,7 @@
 
 window.onload = function ()
 {
-    swal("Yap man", "gotcha", "success");
+    
 	var runAsync = getDetails();
    
 }

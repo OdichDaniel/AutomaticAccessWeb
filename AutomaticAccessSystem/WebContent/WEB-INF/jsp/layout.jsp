@@ -23,11 +23,16 @@
   
    
 </script>
-<script language="JavaScript">
- 
-</script>
+
+
 </head>
 <body class="body-container" ng-app="validateStudentData" ng-controller="mainController">
+
+<%            
+  response.setHeader("pragma", "no-cache");            
+  response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");           
+  response.setHeader("Expires", "0");
+%>
 
  <div class="banner"><tiles:insertAttribute name="header"/></div>
 <div  class='sidemenu'><tiles:insertAttribute name="menu"/></div>

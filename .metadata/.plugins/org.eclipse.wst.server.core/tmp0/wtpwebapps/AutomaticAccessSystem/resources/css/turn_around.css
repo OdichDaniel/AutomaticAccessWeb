@@ -89,16 +89,52 @@
     border-radius:5px;
 }
 
+.hold-widget-edit
+{
+	width:70%;
+	margin-left:15%;
+	margin-bottom:4%;
+	margin-top:4%;
+	border:1px solid #c4cddb;
+	border-top-color:#d3dbde;
+    border-bottom-color:#bfc9dc;
+    box-shadow:0 1px 1px #ccc;
+    border-radius:5px;
+}
+
+.form-widget-edit
+{
+	width:80%;
+	margin-left:10%;
+	margin-top:20px;
+	margin-bottom:20px;
+	
+}
+
 .form-widgets
 {
-	width:60%;
-	margin-left:20%;
-	margin-top:80px;
-	margin-bottom:80px;
+	width:80%;
+	margin-left:10%;
+
+	margin-bottom:20px;
 	
 }
 
 .form-div
+{
+	width:70%;
+	height:70%;
+	margin-left:15%;
+	margin-top:15%;
+	margin-top:4%;
+	border:1px solid #c4cddb;
+	border-top-color:#d3dbde;
+    border-bottom-color:#bfc9dc;
+    box-shadow:0 1px 1px #ccc;
+    border-radius:5px;
+}
+
+#form-div
 {
 	width:70%;
 	height:70%;
@@ -148,6 +184,18 @@
     box-shadow:0 1px 1px #ccc;
     border-radius:5px;
 	
+}
+
+.control-button-holder
+{
+	position:relative;
+	border:1px solid #c4cddb;
+	border-radius: 3px;
+}
+
+#edit-button
+{
+	margin:3px;
 }
 
 #register-message
@@ -229,9 +277,11 @@ html>body .button li a {
 	color: #fff;
 }
 
-
-ul.navigation li.highlight{ background:#ff0000;}
-
+.ui-menu .ui-menu-item a.ui-state-highlight { 
+    font-weight: normal; 
+    margin: -1px; 
+    color:#ff0000;
+}
 #preloader6 {
    color:#ffffff;
    width:50px;
@@ -251,4 +301,45 @@ ul.navigation li.highlight{ background:#ff0000;}
 @-webkit-keyframes preloader6 {
    from {-webkit-transform: rotate(0deg) scale(1, 1);border-radius:0px;}
    to {-webkit-transform: rotate(720deg) scale(0.5, 0.5);border-radius:25px;}
+}
+
+
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    width:70%;
+	margin-left:25%;
+    margin-top:100px;
+    border: 1px solid #888;
+   
+}
+
+.close {
+    color: #ff0000;
+    float: right;
+    margin:20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
