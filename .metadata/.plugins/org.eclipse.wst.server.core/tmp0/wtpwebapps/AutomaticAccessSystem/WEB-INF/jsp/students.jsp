@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel='stylesheet' href='resources/sweetalert-master/dist/sweetalert.css'>
 <script type="text/javascript">
 
 $(function(){
@@ -30,34 +31,35 @@ $(function(){
 
 
 <body>
-   <div class="control-button-holder"><button id="edit-button" class="btn btn-default btn-sm">Edit</button>
-      <button id="delete-button" class="btn btn-default btn-sm">Delete</button>
-   </div>
-   <div id="myModal" class="modal">
+   
+   <div id="mModal" class="modal">
       <!-- Modal content -->
+      
       <div class="modal-content">
-         <span class="close">x</span>
+         <span class="mclose">x</span>
+         
          <form autocomplete="off" class="hold-widget-edit" role="form" data-toggle="validator">
             <div class="form-widget-edit">
+               
                <div class="form-group">
-                  <input type="text" placeholder="First name" id="firstname" class="form-control" required="required"/>
+                  <input type="text" placeholder="First name" id="firstnameE" class="form-control" required="required"/>
                </div>
                <div class="form-group">
-                  <input type="text" placeholder="Second name" id="secondname" class="form-control" required="required"/>
+                  <input type="text" placeholder="Second name" id="secondnameE" class="form-control" required="required"/>
                </div>
                <div class="form-group">
-                  <input type="text" placeholder="Student number" id="studentnumber" class="form-control" required="required"/>
+                  <input type="text" placeholder="Student number" id="studentnumberE" class="form-control" required="required"/>
                </div>
                <div class="form-group">
-                  <input type="text" placeholder="Course" id="course" class="form-control" required="required"/>
+                  <input type="text" placeholder="Course" id="courseE" class="form-control" required="required"/>
                </div>
                <div class="form-group">
-                  <input type="text" placeholder="Course duration" id="courseduration" class="form-control" required="required"/>
+                  <input type="text" placeholder="Course duration" id="coursedurationE" class="form-control" required="required"/>
                </div>
                <div class="form-group">
-                  <input type="text" placeholder="Tuition" id="tuition" class="form-control" required="required"/>
+                  <input type="text" placeholder="Tuition" id="tuitionE" class="form-control"/>
                </div>
-               <div class="form-group"> <button type="submit" class="btn btn-primary btn-block">Submit</button></div>
+               <div class="form-group"> <button onclick="edit();" id="edit-button-student" class="btn btn-primary btn-block">Submit</button></div>
             </div>
             
       </div>
@@ -94,36 +96,120 @@ $(function(){
                <td>
                   <c:out value="${student.courseDuration}"></c:out>
                </td>
+               <td><button onclick="showEditDialog('${student.firstName}', '${student.secondName}', '${student.studentNumber}', '${student.course }', '${student.courseDuration}', '${student.tuition}')" class="btn btn-default btn-sm edit-button">Edit</button>
+    
+               </td>
+               <td><button onclick="deleteStudent('${student.studentNumber}')"  class="btn btn-default btn-sm edit-button">Delete</button></td>
             </tr>
          </c:forEach>
       </tbody>
    </table>
    <script type="text/javascript">
-      var modal = document.getElementById('myModal');
-      
+   
+     var showEditDialog = function(firstname, secondname, studentnumber, course, duration, tuition)
+     {
+        var modal = document.getElementById('mModal');
+        document.getElementById("firstnameE").value = firstname;
+        document.getElementById("secondnameE").value = secondname;
+        document.getElementById("studentnumberE").value = studentnumber;
+        document.getElementById("courseE").value = course;
+        document.getElementById("coursedurationE").value = duration;
+        document.getElementById("tuitionE").value = tuition;
+        
       // Get the button that opens the modal
-      var btn = document.getElementById("edit-button");
+      //var btn = document.getElementByClassName("edit-button");
       
       // Get the <span> element that closes the modal
-      var span = document.getElementsByClassName("close")[0];
-      
-      // When the user clicks on the button, open the modal
-      btn.onclick = function() {
+      var span = document.getElementsByClassName("mclose")[0];
+     
           modal.style.display = "block";
-      }
+   
+      //var mbutton = document.getElementById("edit-button-student");
       
-      // When the user clicks on <span> (x), close the modal
+     
+      
+    
       span.onclick = function() {
           modal.style.display = "none";
       }
       
-      // When the user clicks anywhere outside of the modal, close it
       window.onclick = function(event) {
           if (event.target == modal) {
               modal.style.display = "none";
           }
       }
+      
+     };
+      
+     
    </script>
+   
+   <script type="text/javascript">
+   
+   var edit = function()
+   {
+    
+       var modal = document.getElementById('mModal');
+       var mfirstname = document.getElementById("firstnameE").value;
+       var msecondname = document.getElementById("secondnameE").value;
+       var mstudentnumber = document.getElementById("studentnumberE").value;
+       var mcourse = document.getElementById("courseE").value;
+       var mduration = document.getElementById("coursedurationE").value; 
+       var mtuition = document.getElementById("tuitionE").value;
+       
+          
+	   var url = "http://localhost:8080/AutomaticAccessSystem/edit?firstname="+mfirstname+"&secondname="+msecondname+"&studentnumber="+mstudentnumber+"&course="+mcourse+"&duration="+mduration+"&tuition="+mtuition;
+	   
+	   
+	   var http = new XMLHttpRequest();
+		
+	  http.open("POST", url, true);
+	 
+	
+	http.onreadystatechange = function() {
+	    var status = http.status;
+	    if(http.readyState == 4 && http.status == 200) {
+	       
+	       modal.style.display = "none";
+	       
+	        swal("Success"," Student edited", "success");   
+	    }
+	    else
+	    {
+	        modal.style.display = "none";
+	          swal("Failed", "Couldn't find student", "error");   
+	    }
+   }
+  http.send(null);
+}
+
+  
+  var deleteStudent = function(studentnumber)
+  {
+          
+	   var url = "http://localhost:8080/AutomaticAccessSystem/deletestudent?studentnumber="+studentnumber;
+	     
+	   var http = new XMLHttpRequest();
+		
+	  http.open("POST", url, true);
+	 
+	
+	http.onreadystatechange = function() {
+	    var status = http.status;
+	    if(http.readyState == 4 && http.status == 200) {
+	        
+	        swal("Success"," Student deleted", "success");   
+	    }
+	    else
+	    {
+	        
+	          swal("Failed", "Couldn't delete student", "error");   
+	    }
+   }
+  http.send(null);
+  }
+   </script>
+   
 </body>
 
 

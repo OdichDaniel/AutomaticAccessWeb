@@ -7,14 +7,14 @@ import java.sql.SQLException;
 
 public class DatabaseUtils
 {
-	public boolean checkAccessStatus(Connection connection, String studentNumber, String accessCode)
+	public boolean checkAccessStatus(Connection connection, String studentNumber, String fingerprint)
 	{
-		String checkStatus = "SELECT * FROM Access WHERE student_number='"+studentNumber+"' AND access_code='"+accessCode+"' AND has_checked_out=0";
+		String checkStatus = "SELECT * FROM students WHERE studentnumber='"+studentNumber+"' AND fingerprint_id='"+fingerprint+"'";
 		try 
 		{
 			PreparedStatement statement = connection.prepareStatement(checkStatus);
 			ResultSet set = statement.executeQuery();
-			if(!set.next())
+			if(set.next())
 			{
 				return true;
 			}
@@ -25,9 +25,9 @@ public class DatabaseUtils
 		}
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			System.out.println("dbutils========"+e.getMessage());
 			return false;
 		}
 

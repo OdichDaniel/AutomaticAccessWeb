@@ -1,0 +1,16 @@
+127.0.0.1 - - [12/Jun/2016:09:03:46 +0300] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:03:48 +0300] "GET /AutomaticAccessSystem/ HTTP/1.1" 404 949
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:00 +0300] "GET /AutomaticAccessSystem/loginpage HTTP/1.1" 200 1818
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:00 +0300] "GET /favicon.ico HTTP/1.1" 404 973
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:00 +0300] "GET /favicon.ico HTTP/1.1" 404 973
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:26 +0300] "POST /AutomaticAccessSystem/j_spring_security_check;jsessionid=558A4ADFF4482D152ADFC2908F38A9D3 HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:27 +0300] "GET /AutomaticAccessSystem/allStudents HTTP/1.1" 200 12768
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:27 +0300] "GET /AutomaticAccessSystem/resources/css/datepicker.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:27 +0300] "GET /AutomaticAccessSystem/resources/css/turn_around.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:04:28 +0300] "GET /AutomaticAccessSystem/resources/bootstrap-3.3.6-dist/js/bootstrap.min.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:05:15 +0300] "GET /AutomaticAccessSystem/adduser HTTP/1.1" 200 8425
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:05:51 +0300] "GET /AutomaticAccessSystem/createuser?username=JackFucker&password=1234567&role=ROLE_USER HTTP/1.1" 200 7
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:05:51 +0300] "GET /AutomaticAccessSystem/createuser?username=JackFucker&password=1234567&role=ROLE_USER HTTP/1.1" 409 11
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:06:19 +0300] "GET /AutomaticAccessSystem/allStudents HTTP/1.1" 200 12768
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:06:27 +0300] "GET /AutomaticAccessSystem/profile?studentNumber=210014222&firstName=Odich&secondName=Daniel HTTP/1.1" 200 8629
+0:0:0:0:0:0:0:1 - - [12/Jun/2016:09:06:28 +0300] "GET /AutomaticAccessSystem/details?studentnumber=210014222 HTTP/1.1" 200 107

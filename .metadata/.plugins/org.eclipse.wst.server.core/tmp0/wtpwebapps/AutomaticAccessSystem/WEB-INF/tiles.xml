@@ -9,16 +9,18 @@
         <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
         <put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />
         <put-attribute name="menuButtons" value="/WEB-INF/jsp/menuButtons.jsp" />
-        <put-attribute name="body" value="" />
+        <put-attribute name="staffMenu" value="/WEB-INF/jsp/staffMenu.jsp"></put-attribute>
+        <put-attribute name="register" value="" />
         <put-attribute name="table" value="" />
+        <put-attribute name="adduser" value="" />
         <put-attribute name="profile" value="" />
         <put-attribute name="changepassword" value=""></put-attribute>
         
     </definition>
  
-    <definition name="register" extends="base.definition">
+    <definition name="registerStudent" extends="base.definition">
         <put-attribute name="title" value="Register" />
-        <put-attribute name="body" value="/WEB-INF/jsp/register.jsp" />
+        <put-attribute name="register" value="/WEB-INF/jsp/register.jsp" />
     </definition>
     
     <definition name="allStudents" extends="base.definition">
@@ -34,6 +36,12 @@
        <put-attribute name="title" value="Change password"></put-attribute>
        <put-attribute name="changepassword" value="/WEB-INF/jsp/changePassword.jsp"></put-attribute>
     </definition> 
+    
+     <definition name="adduser" extends="base.definition" >
+       <put-attribute name="title" value="Add user"></put-attribute>
+       <put-attribute name="adduser" value="/WEB-INF/jsp/addUser.jsp"></put-attribute>
+    </definition> 
+    
     
     <definition name="profilepage" extends="base.definition">
     <put-attribute name="title" value="Profile" />

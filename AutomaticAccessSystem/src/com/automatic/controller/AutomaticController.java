@@ -96,7 +96,7 @@ public class AutomaticController
 	@RequestMapping(method = RequestMethod.POST, value="/access", produces = MediaType.ALL_VALUE)
 	public ResponseEntity<String> accessHandler(@RequestParam("studentNumber") String studentNumber, @RequestParam("accessCode") String accessCode)
 	{
-		GrantAccess grantAccess = new GrantAccess(studentNumber, accessCode);
+		GrantAccess grantAccess = new GrantAccess(studentNumber, accessCode, null);
 		
 		return new ResponseEntity<String>(String.valueOf(grantAccess.isGranted()), HttpStatus.ACCEPTED);
 	}

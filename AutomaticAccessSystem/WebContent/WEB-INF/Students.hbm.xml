@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="StudentModel" table="students">
+      <meta attribute="class-description">
+         This class contains the student detail. 
+      </meta>
+      <cache usage="read-write"/>
+      <id name="id" type="int" column="id">
+         <generator class="native"/>
+      </id>
+      <property name="firstName" column="firstname" type="string"/>
+      <property name="secondName" column="Secondname" type="string"/>
+      <property name="course" column="course" type="string"/>
+      <property name="studentNumber" column="studentnumber" type="string"/>
+      <property name="courseDuration" column="duration" type="string"/>
+      
+      
+      
+   </class>
+</hibernate-mapping>

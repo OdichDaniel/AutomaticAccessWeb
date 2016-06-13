@@ -1,6 +1,10 @@
 package com.automatic.controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,18 +15,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.automatic.database.CreateStudentHelper;
+import com.automatic.database.DatabaseConnector;
 import com.automatic.database.DatabaseHelper;
 import com.automatic.database.FetchStudents;
+import com.automatic.database.GrantAccess;
+import com.automatic.database.StudentDetails;
+import com.automatic.models.AccessModel;
 import com.automatic.models.CreateStudentResponse;
 import com.automatic.models.StudentDetail;
 import com.automatic.models.StudentModel;
@@ -31,22 +42,41 @@ import com.automatic.models.StudentModel;
 public class UtilsController
 {
 	@RequestMapping(method = RequestMethod.GET, value = "allStudents")
-	public ModelAndView getAllStudents()
+	public ModelAndView getAllStudents(Authentication auth)
 	{
 		//HashMap<String, Object> model = new HashMap<String, Object>();
 		//model.put("students", FetchStudents.getStudentList());
-		
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        List<String> roles = new ArrayList<String>();
+        for (GrantedAuthority a : authorities) {
+            roles.add(a.getAuthority());
+        }
+        
+        String role = roles.get(0);
+       
+ 
 		ModelAndView modelAndView = new ModelAndView("allStudents");
 		modelAndView.addObject("students", FetchStudents.getStudentList());
-
+		modelAndView.addObject("ROLE", role);
+	    modelAndView.addObject("USERNAME", auth.getName());
+	    modelAndView.addObject("COUNT", getRowCount());
 		return modelAndView;
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="returnHome")
+	@RequestMapping(method = RequestMethod.GET, value="registerStudent")
 	public ModelAndView returnHome()
 	{
-		return new ModelAndView("register");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();   
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        List<String> roles = new ArrayList<String>();
+        for (GrantedAuthority a : authorities) {
+            roles.add(a.getAuthority());
+        }
+        
+        String role = roles.get(0);
+	    
+		return new ModelAndView("registerStudent").addObject("USERNAME", auth.getName()).addObject("ROLE", role).addObject("COUNT", getRowCount());
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="rights")
@@ -60,10 +90,24 @@ public class UtilsController
 			@RequestParam("secondName") String secondName)
 	{
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();   
+		 
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        List<String> roles = new ArrayList<String>();
+        for (GrantedAuthority a : authorities) {
+            roles.add(a.getAuthority());
+        }
+        
+        String role = roles.get(0);
+       
 		ModelAndView mv = new ModelAndView("profilepage");
 		mv.addObject("studentNumber", studentNumber);
 		mv.addObject("firstName", firstName);
 		mv.addObject("secondName", secondName);
+		mv.addObject("USERNAME", auth.getName());
+		mv.addObject("ROLE", role);
+		mv.addObject("accesses", getAccess(studentNumber));
+		mv.addObject("COUNT", getRowCount());
 		
 		return mv;
 	}
@@ -71,24 +115,37 @@ public class UtilsController
 	@RequestMapping(method = RequestMethod.GET, value = "changepassword")
 	public ModelAndView changePassword()
 	{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();   
 		
-		ModelAndView mv = new ModelAndView("changepasswordPage");
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        List<String> roles = new ArrayList<String>();
+        for (GrantedAuthority a : authorities) {
+            roles.add(a.getAuthority());
+        }
+        
+        String role = roles.get(0);
+		
+		ModelAndView mv = new ModelAndView("changepasswordPage").
+				addObject("USERNAME", auth.getName()).addObject("ROLE", role).addObject("COUNT", getRowCount());
 		
 		return mv;
 	}
 	
+	
+	@RequestMapping(method = RequestMethod.GET, value="accessDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AccessModel> getAccessDetails(@RequestParam("studentnumber") String studentnumber)
+	{
+		return null;
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "details", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<StudentDetail> getNumber(@RequestParam("studentNumber") String studentNumber)
+	public ResponseEntity<StudentDetail> getNumber(@RequestParam("studentnumber") String studentnumber)
 	{
+		StudentDetails details = new StudentDetails();
+		System.out.println(studentnumber);
+		DatabaseConnector connector = new DatabaseConnector();
 		
-		StudentDetail detail = new StudentDetail();
-		detail.setStudentNumber(studentNumber);
-		detail.setCourse("Forestry");
-		detail.setCourseDuration("3");
-		detail.setTution("1,000,000");
-		
-		return new ResponseEntity<StudentDetail>(detail, HttpStatus.OK);
+		return new ResponseEntity<StudentDetail>(details.getStudentDetails(connector.getConnection(), studentnumber), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
@@ -112,6 +169,173 @@ public class UtilsController
 		return new ResponseEntity<UpdateResponse>(response, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="register", method=RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> updateReg(@RequestParam("studentnumber") String studentNumber,
+			@RequestParam("fingerId") String fingerId)
+	{
+		System.out.println(studentNumber+"====="+fingerId);
+		DatabaseConnector connector = new DatabaseConnector();
+		int update = CreateStudentHelper.updateStudent(connector.getConnection(), studentNumber, fingerId);
+		if(update == 0)
+		{
+			return new ResponseEntity<String>("Not updated", HttpStatus.CONFLICT);
+		}
+		else
+		{
+			
+			return new ResponseEntity<String>("Updated", HttpStatus.OK);
+		}
+		
+	}
+	
+	@RequestMapping(value="access", method=RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> access(@RequestParam("studentnumber") String studentnumber,
+			@RequestParam("fingerId") String fingerId, @RequestParam("floor") String floor)
+	{
+	
+		System.out.println(floor);
+		GrantAccess ga = new GrantAccess(studentnumber, floor, fingerId);
+		if(ga.isGranted())
+		{
+			return new ResponseEntity<String>("Granted", HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<String>("Not granted", HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping(value="adduser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView addUser()
+	{
+          Authentication auth = SecurityContextHolder.getContext().getAuthentication();   
+		
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        List<String> roles = new ArrayList<String>();
+        for (GrantedAuthority a : authorities) {
+            roles.add(a.getAuthority());
+        }
+        
+        String role = roles.get(0);
+		
+		ModelAndView mv = new ModelAndView("adduser")
+		.addObject("USERNAME", auth.getName()).addObject("ROLE", role).addObject("COUNT", getRowCount());
+		return mv;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="createuser", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> createUser(@RequestParam("username") String username, @RequestParam("password") String password,
+			@RequestParam("role") String role)
+	{
+		System.out.println(username+"=========="+password+"=========="+role);
+		DatabaseConnector connector = new DatabaseConnector();
+		String create = "INSERT INTO users values('"+username+"', '"+password+"', '"+role+"')";
+		try {
+			PreparedStatement statement = connector.getConnection().prepareStatement(create);
+			statement.execute();
+			return new ResponseEntity<String>("Created", HttpStatus.OK);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>("Not created", HttpStatus.CONFLICT);
+		}
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="edit", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> editStudent(@RequestParam("firstname") String firstname, @RequestParam("secondname") String secondname,
+			@RequestParam("studentnumber") String studentnumber, @RequestParam("course") String course,
+			@RequestParam("duration") String duration, @RequestParam("tuition") String tuition)
+	{
+		DatabaseConnector connector = new DatabaseConnector();
+		String update = "UPDATE students SET firstname='"+firstname+"', secondname='"+secondname+"', course='"+course+"', duration='"+duration+"', tuition='"+tuition+"' WHERE studentnumber='"+studentnumber+"'";
+		
+		
+		try 
+		{
+			PreparedStatement statement = connector.getConnection().prepareStatement(update);
+			int success = statement.executeUpdate();
+			return new ResponseEntity<String>("Updated", HttpStatus.OK);
+		} 
+		catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>("Not Updated", HttpStatus.CONFLICT);
+		}
+		
+	}
+	
+	
+	@RequestMapping(value="deletestudent", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> deleteStudent(@RequestParam("studentnumber") String studentnumber)
+	{
+		DatabaseConnector connector = new DatabaseConnector();
+		String delete = "DELETE from students WHERE studentnumber='"+studentnumber+"'";
+		try 
+		{
+			PreparedStatement statement = connector.getConnection().prepareStatement(delete);
+			statement.execute();
+			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
+		}
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<String>("Not deleted", HttpStatus.CONFLICT); 
+		}
+	}
+
+	@RequestMapping(value="date", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> setDate(@RequestParam("date") String date)
+	{
+		DatabaseConnector connector = new DatabaseConnector();
+		String insert = "INSERT into date values('"+date+"')";
+		String delete = "DELETE from date";
+		
+		PreparedStatement statement;
+		PreparedStatement statement1;
+		try {
+			statement1 = connector.getConnection().prepareStatement(delete);
+			statement1.execute();
+			statement = connector.getConnection().prepareStatement(insert);
+			statement.executeUpdate();
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>("Fail", HttpStatus.CONFLICT);
+		
+		}
+		
+		
+		
+		
+	}
+	
+	public List<AccessModel> getAccess(String studentnumber)
+	{
+	   DatabaseConnector connector = new DatabaseConnector();
+	   String query = "SELECT * FROM access WHERE studentnumber='"+studentnumber+"'";
+	   try {
+		PreparedStatement statement = connector.getConnection().prepareStatement(query);
+		ResultSet set = statement.executeQuery();
+		
+		
+		List<AccessModel> modelList = new ArrayList<AccessModel>();
+		while(set.next())
+		{
+			AccessModel model = new AccessModel();
+			model.setFloor(set.getString("floor"));
+			model.setTime(set.getString("access_time"));
+			modelList.add(model);
+			
+		}
+		return modelList;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		return null;
+	}
+	}
+	
 	private class UpdateResponse
 	{
 		public String message;
@@ -133,6 +357,28 @@ public class UtilsController
 		public String getCode()
 		{
 			return this.code;
+		}
+	}
+	
+	private String getRowCount()
+	{
+		DatabaseConnector connector = new DatabaseConnector();
+		String getCount = "SELECT * FROM access";
+		try {
+			PreparedStatement statement = connector.getConnection().prepareStatement(getCount);
+			ResultSet set = statement.executeQuery();
+			int row = 0;
+			while(set.next())
+			{
+				row++;
+			}
+			
+			return String.valueOf(row);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 }

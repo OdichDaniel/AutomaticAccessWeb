@@ -7,6 +7,16 @@ public class StudentModel
 	public String course;
 	public String studentNumber;
 	public String courseDuration;
+	public String tuition;
+	
+	
+	public String getTuition() {
+		return tuition;
+	}
+	public void setTuition(String tuition) {
+		this.tuition = tuition;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

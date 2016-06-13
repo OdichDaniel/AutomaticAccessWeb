@@ -34,11 +34,16 @@ window.onload = function ()
 <body>
 
      <ul id="menu">
-         <li class="ui-state-disabled"><a href="/AutomaticAccessSystem/returnHome"><span>Register</span></a>
+         <li><a href="/AutomaticAccessSystem/registerStudent"><span>Register</span></a>
          <li><a href='/AutomaticAccessSystem/allStudents'><span>All students</span></a></li>
          <li><a href='/AutomaticAccessSystem/changepassword' ><span>Change password</span></a></li>
+         <li><a href="/AutomaticAccessSystem/adduser">Add User</a></li>
          <li><a href='/AutomaticAccessSystem/logout'><span>Logout</span></a></li>
     </ul>
+    
+   <div id="count-holder">
+  <p id="count-number">Visitors: ${COUNT}</p>
+  </div>
 
 </body>
 </html>

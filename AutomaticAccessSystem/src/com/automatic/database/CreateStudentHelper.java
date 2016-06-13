@@ -54,7 +54,7 @@ public class CreateStudentHelper
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			return false;
@@ -76,6 +76,19 @@ public class CreateStudentHelper
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public static int updateStudent(Connection connection, String studentNumber, String fingerId)
+	{
+		String update = "UPDATE students SET fingerprint_id='"+fingerId+"' WHERE studentnumber='"+studentNumber+"'";
+		try {
+			PreparedStatement statement = connection.prepareStatement(update);
+			int s = statement.executeUpdate();
+			return s;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return 0;
 		}
 	}
 

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -21,51 +23,56 @@ public class TimerService {
 		
 		String queryStatement = "SELECT * FROM finance";
 		
-		connector = new DatabaseConnector();
-		Connection connection = connector.getConnection();
-		PreparedStatement statement;
-		ResultSet set = null;
-		try
+		if(getDate().equals(getSetDate()))
 		{
-			statement = connection.prepareStatement(queryStatement);
-			set = statement.executeQuery();
-			
-			while(set.next())
+			connector = new DatabaseConnector();
+			Connection connection = connector.getConnection();
+			PreparedStatement statement;
+			ResultSet set = null;
+			try
 			{
-				String tuition = set.getString("tuition");
-				String studentnumber = set.getString("studentnumber");
-				System.out.println(studentnumber + "==="+tuition);
+				statement = connection.prepareStatement(queryStatement);
+				set = statement.executeQuery();
 				
-				int updateSuccess;
-				
-				do
+				while(set.next())
 				{
-					updateSuccess = updateTuition(studentnumber, tuition);
-				}while(updateSuccess == 0);
-				
-			}
-		} 
-		catch (SQLException e)
-		{
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-		finally
-		{
-			try {
-				set.close();
-			} catch (SQLException e) {
-				
+					String tuition = set.getString("tuition");
+					String studentnumber = set.getString("studentnumber");
+					System.out.println(studentnumber + "==="+tuition);
+					
+					int updateSuccess;
+					
+					do
+					{
+						updateSuccess = updateTuition(studentnumber, tuition);
+					}while(updateSuccess == 0);
+					
+				}
+			} 
+			catch (SQLException e)
+			{
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 			finally
 			{
 				try {
-					connection.close();
+					set.close();
 				} catch (SQLException e) {
 					
 				}
+				finally
+				{
+					try {
+						connection.close();
+					} catch (SQLException e) {
+						
+					}
+				}
 			}
 		}
+		
+		
 	}
 	
 	private int updateTuition(String studentnumber, String amount)
@@ -104,6 +111,36 @@ public class TimerService {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	private String getDate()
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		return formatter.format(new Date());
+	}
+	
+	public String getSetDate()
+	{
+		String getDate = "SELECT * from date";
+		DatabaseConnector connector = new DatabaseConnector();
+		try {
+			PreparedStatement statement = connector.getConnection().prepareStatement(getDate);
+			ResultSet set = statement.executeQuery();
+			String date = null;
+			if(set.next())
+			{
+				date = set.getString("date");
+				return date;
+			}
+			else
+			{
+				return " ";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return " ";
 		}
 	}
 }

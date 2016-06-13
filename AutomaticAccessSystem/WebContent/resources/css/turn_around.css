@@ -9,13 +9,12 @@
 .banner
 {
 	position:fixed;
-	background:#0588d3;
+	background:#ffffff;
 	height:80px;
 	margin-top:0px;
 	margin-left:0px;
 	padding-top:0px;
-	border-left: 10px solid #42b6fb;
-	border-right: 10px solid #42b6fb;
+	border-bottom: 1px solid #2f2f2f;
 	width:100%;
 }
 
@@ -24,10 +23,35 @@
 	width:20%;
 	height:100%;
 	position:fixed;
-	background:#000000;
+	background:#212830;
 	margin-top:80px;
-	border-left: 10px solid #464646;
-	border-right: 10px solid #464646;
+	border-right: 1px solid #666666;
+	
+}
+
+.dropdown
+{
+	margin-right:50px;
+	margin-top:20px;
+	
+}
+
+.dropdown-toggle
+{
+	text-decoration:none;
+	display:block;
+	list-style:none;
+}
+
+
+
+.dropdown-toggle:hover
+{
+	color:black;
+}
+.dropdown-menu
+{
+	list-style:none;
 }
 
 .content-body
@@ -45,11 +69,7 @@
 	width:100%;
 	height:100%;
 }
-.modal fade
-{
-	width:100%;
-	height:100%;
-}
+
 
 .register-container
 {
@@ -67,12 +87,14 @@
 {
 	width:100%;
 	height:100%;
+	margin-top:20px;
 }
 
 .change-password-container
 {
 	width:100%;
 	heidht:100%;
+
 }
 
 .hold-widgets
@@ -115,9 +137,29 @@
 {
 	width:80%;
 	margin-left:10%;
-
+	margin-top:20px;
 	margin-bottom:20px;
 	
+}
+
+#welcome_tag
+{
+	margin:0px;
+	height:100%;
+}
+#welcome_text
+{
+	position:absolute;
+	margin-top:25px;
+	margin-left:60px;
+	font-weight:bold;
+}
+
+#welcome-avatar
+{
+	width:40px;
+	position:absolute;
+	margin:10px;
 }
 
 .form-div
@@ -165,8 +207,27 @@
 .table
 {
 	width:90%;
+	height:100%;
 	margin-left:5%;
 	margin-top:2%;
+}
+#count-number
+{
+	margin-left:12px;
+	color:white;
+	margin-top:12px;
+	
+}
+#count-holder
+{
+	background:#475667;
+	position: absolute;
+    left: 0;
+    margin-top: 30%;
+    width:100%;
+    height:20%;
+    border-radius: 2px;
+     
 }
 
 .student-profile-container
@@ -177,12 +238,14 @@
 .student-profile
 {
 	width:60%;
+	height:100%;
 	margin-left:20%;
     border:1px solid #c4cddb;
 	border-top-color:#d3dbde;
     border-bottom-color:#bfc9dc;
     box-shadow:0 1px 1px #ccc;
     border-radius:5px;
+    margin-top:20px;
 	
 }
 
@@ -221,19 +284,31 @@
 	margin:top:10px;
 }
 
-#image-container
+.image-container
 {
 	justify-content:center;
 	display:flex;
 	margin-top:10px;
 }
 
+#profile-image:hover{
+    opacity:0.5;
+}
+
+#edit-image-button
+{
+	justify-content:center;
+	display:flex;
+	margin-top:18px;
+	position:absolute;
+}
+
 .button {
 	width: 20%;
 	padding: 0 0 0 0;
-	font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, sans-serif;
-	background-color: #000000;
-	color: #ffffff;
+	font-weight:bold;
+	background-color: #212830;
+	color: #454545;
 	margin-top:90px;
 	position:fixed;
 	
@@ -249,7 +324,8 @@
 
 	
 .button li {
-	border-bottom: 1px solid #5c5c5c;
+	border-bottom: 1px solid #161a0f;
+	border-right: 1px solid #e0e0e0;
 	margin: 0;
 	list-style: none;
 	list-style-image: none;
@@ -258,10 +334,8 @@
 .button li a {
 	display: block;
 	padding: 15px 5px 15px 0.5em;
-	border-left: 10px solid #464646;
-	border-right: 10px solid #464646;
-	background-color: #000000;
-	color: #fff;
+	background-color: #212830;
+	color: #afbbc9;
 	text-decoration: none;
 	width: 100%;
 }
@@ -271,10 +345,10 @@ html>body .button li a {
 }
 
 .button li a:hover {
-	border-left: 10px solid #1c64d1;
-	border-right: 10px solid #5ba3e0;
-	background-color: #2586d7;
-	color: #fff;
+	border-left: 10px solid #d6dcc7;
+	border-right: 10px solid #d6dcc7;
+	background-color: #ffffff;
+	color: #353c25;
 }
 
 .ui-menu .ui-menu-item a.ui-state-highlight { 
@@ -339,6 +413,21 @@ html>body .button li a {
 
 .close:hover,
 .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.mclose {
+    color: #ff0000;
+    float: right;
+    margin:20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.mclose:hover,
+.mclose:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

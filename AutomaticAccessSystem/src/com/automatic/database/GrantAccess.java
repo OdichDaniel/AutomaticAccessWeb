@@ -7,12 +7,14 @@ import java.sql.SQLException;
 public class GrantAccess
 {
 	private String studentNumber;
-	private String accessCode;
+	private String floor;
+	private String fingerId;
 	
-	public GrantAccess(String studentNumber, String accessCode)
+	public GrantAccess(String studentNumber, String floor, String fingerId)
 	{
 		this.studentNumber = studentNumber;
-		this.accessCode = accessCode;
+		this.floor = floor;
+		this.fingerId = fingerId;
 	}
 	
 	public boolean isGranted()
@@ -20,9 +22,9 @@ public class GrantAccess
 		DatabaseConnector connector = new DatabaseConnector();
 		DatabaseUtils dbUtils = new DatabaseUtils();
 		
-		if(dbUtils.checkAccessStatus(connector.getConnection(), studentNumber, accessCode))
+		if(dbUtils.checkAccessStatus(connector.getConnection(), studentNumber, fingerId))
 		{
-			String accessString = "INSERT INTO Access(student_number, access_code, has_checked_out) VALUES('"+studentNumber+"', '"+accessCode+"', 0)";
+			String accessString = "INSERT INTO access(studentnumber, floor) VALUES('"+studentNumber+"', '"+floor+"')";
 			PreparedStatement stat;
 			try {
 				stat = connector.getConnection().prepareStatement(accessString);
@@ -31,7 +33,7 @@ public class GrantAccess
 			} catch (SQLException e) 
 			{
 				e.printStackTrace();
-				System.out.println(e.getMessage());
+				System.out.println("fuck here =="+e.getMessage());
 				return false;
 			}
 			

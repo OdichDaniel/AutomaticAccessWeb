@@ -19,25 +19,28 @@ window.onload = function ()
 
 var getDetails = function()
 {
+  var number = ${studentNumber};
   var http = new XMLHttpRequest();
-	var url = "http://localhost:8080/AutomaticAccessSystem/details?studentNumber=858874";
+	var url = "http://localhost:8080/AutomaticAccessSystem/details?studentnumber="+number;
 	http.open("GET", url, true);
 	
 	http.onreadystatechange = function() {
 	    var status = http.status;
 	    if(http.readyState == 4 && http.status == 200) {
 	       
+	       
 	        var obj = JSON.parse(http.responseText);
 	        document.getElementById("student-number").innerHTML = obj.studentNumber;
 	        document.getElementById("course").innerHTML = obj.course;
 	        document.getElementById("course-duration").innerHTML = obj.courseDuration;
-	        document.getElementById("tuition").innerHTML = obj.tuition;
-	        toggle_visibility("preloader6");
+	       
+	       
 	        
 	    }
 	    else
 	    {
 	    	response = "";
+	    
 	    }
 	
 	
@@ -55,51 +58,53 @@ var getDetails = function()
    }
   
 </script>
-<script>
-  
-    $(document).ready(function()
-    {
- 		var str=location.href.toLowerCase();
-        $('.navigation li a').each(function()
-         {
-                if (str.indexOf(this.href.toLowerCase()) > -1) 
-                {
-						$("li.highlight").removeClass("highlight");
-                        $(this).parent().addClass("highlight"); 
-                }
-         });
-          
-		$('li.highlight').parents().each(function()
-		{
-												  
-					if ($(this).is('li'))
-					{
-						$(this).addClass("highlight"); 
-						}							  
-		});
-	   });  
 
-</script>
 </head>
 <body>
 <div id="student-name">${firstName}&nbsp;&nbsp;${secondName}</div>
-<div id="image-container">
-  <img src="resources/images/profile.png" />
+<div class="image-container">
+  <img id="profile-image" src="resources/images/profile.png"></image>
+  
 </div>
 
 
 
 <div class="student-profile-container">
 <div class="student-profile">
-<div id="preloader6"></div>
-<table>
-<tr><td style="padding-right:120px; padding-bottom:20px;">Student number</td><td id="student-number"></td></tr>
-<tr><td style="padding-right:120px; padding-bottom:20px;">Course</td><td id="course">Computer engineering</td></tr>
-<tr><td style="padding-right:120px; padding-bottom:20px;">Course duration</td><td id="course-duration">4</td></tr>
-<tr><td style="padding-right:120px; padding-bottom:20px;">Tuition</td><td id="tuition">858488</td></tr>
+
+<table style="margin:10px;">
+<tr><td style="padding-right:120px; padding-bottom:20px;">Student number</td><td style="padding-right:120px; padding-bottom:20px;" id="student-number"><p>${studenNumber}</p></td></tr>
+<tr><td style="padding-right:120px; padding-bottom:20px;">Course</td><td style="padding-right:120px; padding-bottom:20px;" id="course"></td></tr>
+<tr><td style="padding-right:120px; padding-bottom:20px;">Course duration</td><td style="padding-right:120px; padding-bottom:20px;" id="course-duration"></td></tr>
+
 </table>
 </div>
 </div>
+
+ <table class = "table">
+      <thead>
+         <tr>
+            <th>Time</th>
+            <th>Floor</th>
+            
+         </tr>
+      </thead>
+      <tbody>
+         <c:forEach var="access" items="${accesses}" >
+            <tr style="font-size: 10">
+               <td>
+                 
+                     <c:out value="${access.time}"></c:out>
+                 
+               </td>
+               <td>
+                  <c:out value="${access.floor}"></c:out>
+               </td>
+               
+            </tr>
+         </c:forEach>
+      </tbody>
+   </table>
 
 
 </body>

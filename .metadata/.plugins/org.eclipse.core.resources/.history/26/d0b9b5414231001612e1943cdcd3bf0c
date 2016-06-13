@@ -1,0 +1,5 @@
+  <div>
+  <div id="count-holder">
+  <p>${COUNT}</p>
+  </div>
+  </div>

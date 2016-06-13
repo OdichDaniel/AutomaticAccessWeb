@@ -2,26 +2,22 @@ package com.automatic.models;
 
 public class AccessModel
 {
-	private int statusCode;
-	private String message;
+	private String time;
+	private String floor;
 	
-	public void setStatusCode(int statusCode)
-	{
-		this.statusCode = statusCode;
+	
+	public String getTime() {
+		return time;
 	}
-	public int getStatusCode()
-	{
-		return this.statusCode;
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public String getFloor() {
+		return floor;
+	}
+	public void setFloor(String floor) {
+		this.floor = floor;
 	}
 	
-	public void setMessage(String message)
-	{
-		this.message = message;
-	}
 	
-	public String getMessage()
-	{
-		return this.message;
-	}
-
 }

@@ -10,18 +10,17 @@ $(window).load(function()
   
    $('.hold-widgets').validator().on('submit', function (e) {
   if (e.isDefaultPrevented()) {
-    // handle the invalid form...
-     changePassword();
+    
+     register();
   } else {
-    // everything looks good!
-    alert("look good");
+    
   }
 }) 
 });
 
 
 //call to change password
-var changePassword = function()
+var register = function()
 {
   var http = new XMLHttpRequest();
   var firstname = document.getElementById("firstname").value;
@@ -54,9 +53,7 @@ var changePassword = function()
 </head>
 
 
-
-
-
+<body>
 <div class="form-div">
 
      <div>
@@ -92,7 +89,8 @@ var changePassword = function()
 <input type="text" placeholder="Tuition" id="tuition" class="form-control" required="required"/>
 </div>
 <div class="form-group">
-<button type="submit" class="btn btn-primary btn-block">Submit</button></div>
+<button type="submit" onclick="register();" class="btn btn-primary btn-block">Submit</button></div>
 </div>
 </form>
 </div>
+</body>

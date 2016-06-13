@@ -31,6 +31,7 @@ public class FetchStudents
 				model.setStudentNumber(set.getString("studentnumber"));
 				model.setCourse(set.getString("course"));
 				model.setCourseDuration(set.getString("duration"));
+				model.setTuition(set.getString("tuition"));
 				
 				list.add(model);
 			}
